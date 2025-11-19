@@ -4,13 +4,13 @@ import jakarta.validation.constraints.Email;
 
 public class EmailUserRecoveryDto {
     @Email(message = "email is invalid. please send one email valid.")
-    private String toGmail;
+    private String email;
 
-    public String getToGmail() {
-        return toGmail;
+    public String getEmail() {
+        return this.email;
     }
 
-    public void setToGmail(String toGmail) {
-        this.toGmail = toGmail;
+    public void setToGmail(String email) {
+        this.email = email;
     }
 }

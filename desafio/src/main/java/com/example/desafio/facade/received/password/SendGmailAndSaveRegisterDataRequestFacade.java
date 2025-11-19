@@ -45,7 +45,7 @@ public class SendGmailAndSaveRegisterDataRequestFacade {
     public ResponseReceivedPassword execute(EmailUserRecoveryDto emailUserRecoveryDto) throws MessagingException {
 
         String tokenGenerated= generateTokenPasswordRecovery.execute();
-        String emailRequest=emailUserRecoveryDto.getToGmail();
+        String emailRequest=emailUserRecoveryDto.getEmail();
 
         User entityByEmailRequest=validationEmailRecoverRequest.getEntityByEmailOrThrow(emailRequest);
         saveRegisterPasswordService.executeSave(tokenGenerated,entityByEmailRequest);
