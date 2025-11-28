@@ -16,10 +16,13 @@ public class Project {
     private Long id;
     private String projectCreator;
     private String passwordAccess;
-    private String titleProject;
+    private String nameProject;
     private String description;
     private LocalDate startDate;
     private LocalDate endDate;
     @OneToMany(mappedBy = "project")
     private List<Task> tasks;
+
+
+
 }

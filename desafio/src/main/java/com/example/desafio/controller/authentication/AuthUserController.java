@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/user")
-public class AuthUser implements AuthUserDoc {
+public class AuthUserController implements AuthUserDoc {
     private final RegisterAndGenerateTokensFacade registerAndGenerateTokensFacade;
     private final LoginAndGenerateTokensFacade loginAndGenerateTokensFacade;
 
-    public AuthUser(RegisterAndGenerateTokensFacade registerAndGenerateTokensFacade, LoginAndGenerateTokensFacade loginAndGenerateTokensFacade) {
+    public AuthUserController(RegisterAndGenerateTokensFacade registerAndGenerateTokensFacade, LoginAndGenerateTokensFacade loginAndGenerateTokensFacade) {
         this.registerAndGenerateTokensFacade = registerAndGenerateTokensFacade;
         this.loginAndGenerateTokensFacade = loginAndGenerateTokensFacade;
     }

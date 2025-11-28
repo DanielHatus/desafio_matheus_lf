@@ -10,7 +10,7 @@ public class EmailUserRecoveryDto {
         return this.email;
     }
 
-    public void setToGmail(String email) {
+    public void setEmail(String email) {
         this.email = email;
     }
 }

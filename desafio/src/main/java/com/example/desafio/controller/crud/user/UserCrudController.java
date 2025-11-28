@@ -5,9 +5,7 @@ import com.example.desafio.dto.request.crud.user.patch.UserPatchDto;
 import com.example.desafio.dto.request.crud.user.put.UserPutDto;
 import com.example.desafio.dto.response.crud.user.ResponseUserDataDto;
 import com.example.desafio.service.crud.user.UserCrudService;
-import com.example.desafio.utils.pageable.GeneratePageableByParams;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,14 +13,12 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/user/crud")
-public class UserCrud implements UserCrudDoc {
+public class UserCrudController implements UserCrudDoc {
 private final UserCrudService service;
-private final GeneratePageableByParams pageableByParams;
 
 
-    public UserCrud(UserCrudService service, GeneratePageableByParams pageableByParams) {
+    public UserCrudController(UserCrudService service) {
         this.service = service;
-        this.pageableByParams = pageableByParams;
     }
 
     @Override
@@ -34,8 +30,7 @@ private final GeneratePageableByParams pageableByParams;
             @RequestParam(required = false) String order,
             @RequestParam(required = false) String direction){
 
-        Pageable pageable=pageableByParams.generate(page,size,order,direction);
-        return ResponseEntity.ok(service.getUserByPageOrder(pageable));
+        return ResponseEntity.ok(service.getUserByPageOrder(page,size,order,direction));
     }
 
     @Override

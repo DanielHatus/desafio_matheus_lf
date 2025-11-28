@@ -1,7 +1,6 @@
-package com.example.desafio.utils.pageable;
+package com.example.desafio.utils.pageable.logic.default_;
 
 import com.example.desafio.exceptions.typo.runtime.badrequest.BadRequestException;
-import com.example.desafio.utils.get.fields.user.GetFieldsUser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -12,19 +11,17 @@ import java.util.List;
 
 @Slf4j
 @Component
-public class GeneratePageableByParams{
-    private final GetFieldsUser getFieldsUser=GetFieldsUser.getInstanceGetFieldUser();
-    private final List<String> fieldsName;
+public class PageableLogicDefault {
+    public Pageable generate(
+            Integer page,
+            Integer size,
+            String order,
+            String direction,
+            List<String> fieldsNameValid){
 
-    public GeneratePageableByParams(){
-        this.fieldsName=getFieldsUser.getFieldsUserClassName();
-        deletePasswordFieldFromList();
-    }
-
-    public Pageable generate(Integer page,Integer size,String order,String direction){
+        String orderCorrect=validationOrderAndReturnOrderOrThrowIfOrderIsIncorrect(order,fieldsNameValid);
         int pageCorrect=validationPageParamAndReturnPageOrThrowIfPageIsIncorrect(page);
         int sizeCorrect=validationSizeParamAndReturnPageOrThrowIfSizeIsIncorrect(size);
-        String orderCorrect=validationOrderAndReturnOrderOrThrowIfOrderIsIncorrect(order);
         Sort.Direction directionCorrect= validationDirectionAndReturnDirectionOrThrowIfDirectionIsIncorrect(direction);
 
         log.debug("✅ The pageable was successfully generated. It's ready to be used in the service and generate the paginated list" +
@@ -39,9 +36,9 @@ public class GeneratePageableByParams{
 
             throw new BadRequestException("The page value cannot be null or less than 0.");
         }
-           log.debug("✅ The value passed to the page was successfully validated, returning the page to be used in the page request.");
+        log.debug("✅ The value passed to the page was successfully validated, returning the page to be used in the page request.");
 
-           return page-1;
+        return page-1;
     }
 
     private Integer validationSizeParamAndReturnPageOrThrowIfSizeIsIncorrect(Integer size){
@@ -52,17 +49,12 @@ public class GeneratePageableByParams{
             throw new BadRequestException("The value passed in the size cannot be null or less than 1.");
         }
 
-            log.debug("✅ The value passed to the size was successfully validated, returning the size to be used in the page request.");
+        log.debug("✅ The value passed to the size was successfully validated, returning the size to be used in the page request.");
 
-            return size;
+        return size;
     }
 
-    private void deletePasswordFieldFromList(){
-        this.fieldsName.remove("password");
-        log.debug("✅ The password field was successfully deleted from the list.");
-    }
-
-    private String validationOrderAndReturnOrderOrThrowIfOrderIsIncorrect(String order){
+    private String validationOrderAndReturnOrderOrThrowIfOrderIsIncorrect(String order, List<String> listNameFieldsAfterDeleteElements){
         if (order==null){
             log.error("❌ The value passed in the order was null. Returning an exception.");
             throw new BadRequestException("The value passed in the order was null. Please pass only valid values.");
@@ -71,7 +63,7 @@ public class GeneratePageableByParams{
 
         boolean orderIsCorrect=false;
 
-        for(String name:this.fieldsName){
+        for(String name:listNameFieldsAfterDeleteElements){
             if (order.equals(name)){
                 orderIsCorrect=true;
                 break;
@@ -82,7 +74,6 @@ public class GeneratePageableByParams{
             log.error("❌ The value passed in the order was incorrect. Returning an exception.");
             throw new BadRequestException("The value passed in the order was incorrect. Please pass only valid values.");
         }
-
 
         log.debug("✅ The value passed in the order of the page was successfully validated. " +
                 "Return the value from the order to be used in the pageable.");
@@ -99,5 +90,4 @@ public class GeneratePageableByParams{
         }
         return (direction.equalsIgnoreCase("asc")? Sort.Direction.ASC: Sort.Direction.DESC);
     }
-
 }

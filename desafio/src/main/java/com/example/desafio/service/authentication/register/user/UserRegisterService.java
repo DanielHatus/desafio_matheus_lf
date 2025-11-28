@@ -24,8 +24,6 @@ public class UserRegisterService{
 
     public User registerUser(UserRegisterDto requestRegisterData){
 
-      validationIfEmailAndUsernameIsUnique(requestRegisterData.getEmail(),requestRegisterData.getUsername());
-
       User entity=mapperCore.toEntity(requestRegisterData);
 
       entity.setPassword(encryptedPassword.encrypted(entity.getPassword()));
@@ -35,15 +33,5 @@ public class UserRegisterService{
 
         log.debug("✅ user{} saved successfully in database", entity.getUsername());
       return entity;
-    }
-
-    private void validationIfEmailAndUsernameIsUnique(String email,String username){
-        if (repository.existsByEmail(email)){
-            log.error("❌ There was an error registering the user because a user with this email address already exists.");
-            throw new BadRequestException("Sorry, but there is already a user registered with this email address.");
-        }
-        if (repository.existsByUsername(username)){
-            log.error("❌ There was an error registering the user because a user with this username already exists.");
-        }
     }
 }

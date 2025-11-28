@@ -3,12 +3,12 @@ package com.example.desafio.service.crud.user;
 import com.example.desafio.dto.request.crud.user.patch.UserPatchDto;
 import com.example.desafio.dto.request.crud.user.put.UserPutDto;
 import com.example.desafio.dto.response.crud.user.ResponseUserDataDto;
-import com.example.desafio.exceptions.typo.runtime.badrequest.BadRequestException;
 import com.example.desafio.exceptions.typo.runtime.notfound.NotFoundException;
 import com.example.desafio.mapper.UserMapperCore;
 import com.example.desafio.model.user.User;
 import com.example.desafio.repository.user.UserRepository;
 import com.example.desafio.utils.encryptedpassword.EncryptedPassword;
+import com.example.desafio.utils.pageable.factory.PageableFactoryByClassReceived;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
@@ -16,20 +16,34 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+
 @Service
 @Slf4j
 public class UserCrudService{
     private final UserRepository repository;
     private  final UserMapperCore mapperCore;
     private final EncryptedPassword encryptedPassword;
+    private final PageableFactoryByClassReceived pageableFactoryByClassReceived;
 
-    public UserCrudService(UserRepository repository, UserMapperCore mapperCore, EncryptedPassword encryptedPassword) {
+
+
+    public UserCrudService(
+            UserRepository repository,
+            UserMapperCore mapperCore,
+            EncryptedPassword encryptedPassword,
+            PageableFactoryByClassReceived pageableFactoryByClassReceived
+           ) {
+
         this.repository = repository;
         this.mapperCore = mapperCore;
         this.encryptedPassword = encryptedPassword;
+       this.pageableFactoryByClassReceived=pageableFactoryByClassReceived;
     }
 
-    public Page<ResponseUserDataDto> getUserByPageOrder(Pageable pageable){
+    public Page<ResponseUserDataDto> getUserByPageOrder(Integer page,Integer size,String order,String direction){
+
+        Pageable pageable=pageableFactoryByClassReceived.pageableFactory(User.class,page,size,order,direction);
+
         log.debug("✅ The users were successfully captured according to the request pagination.");
         return mapperCore.toPageResponseUserDataDto(repository.findAll(pageable));
     }
@@ -73,10 +87,6 @@ public class UserCrudService{
         catch (EmptyResultDataAccessException e){
             log.error("❌ No user registered with ID {} was found on the server.",id);
             throw new NotFoundException("id not found in database");
-        }
-        catch (Exception e){
-            log.error("❌ An exception was found in the deleteUserById method in the RegisterUserService class.");
-            throw new BadRequestException("The following exception occurred: "+e);
         }
     }
 

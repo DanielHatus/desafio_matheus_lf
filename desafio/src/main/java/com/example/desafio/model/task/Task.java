@@ -5,6 +5,8 @@ import com.example.desafio.enums.Status;
 import com.example.desafio.model.project.Project;
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
+
 @Entity
 public class Task {
     @Id
@@ -13,7 +15,12 @@ public class Task {
     private String description;
     private Status status;
     private Priority priority;
+    private LocalDate dueDate;
+    private LocalDate startDate;
     @ManyToOne
     @JoinColumn(name = "project_id")
     private Project project;
+
+
+
 }
