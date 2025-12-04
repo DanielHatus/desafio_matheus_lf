@@ -1,12 +1,27 @@
 package com.example.desafio.dto.request.crud.project.put;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
 import java.time.LocalDate;
 
 public class ProjectPutDto {
+    @NotBlank
     private String projectCreator;
+
+    @NotBlank
+    @Size(min=4,max=12)
     private String passwordAccess;
+
+    @NotBlank
+    @Size(min=3,max=35)
     private String nameProject;
+
+    @NotBlank
     private String description;
+
+    @NotNull
     private String endDate;
 
     public String getProjectCreator() {
