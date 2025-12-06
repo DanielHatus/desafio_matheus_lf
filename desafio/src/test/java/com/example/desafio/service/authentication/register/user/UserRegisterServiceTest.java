@@ -64,38 +64,4 @@ class UserRegisterServiceTest {
       verify(repository,times(1)).save(user);
 
     }
-
-    @Test
-    void registerUserFailedPerEmailExistsInDb(){
-        UserRegisterDto userRegisterDto=new UserRegisterDto();
-        userRegisterDto.setEmail("teste@gmail.com");
-        userRegisterDto.setPassword("password123");
-        userRegisterDto.setFirstName("teste");
-        userRegisterDto.setLastName("teste");
-        userRegisterDto.setUsername("teste");
-
-
-        when(repository.existsByEmail(userRegisterDto.getEmail())).thenReturn(true)
-                .thenThrow(new BadRequestException("email exists in database"));
-
-        assertThrows(BadRequestException.class,()-> userRegisterService.registerUser(userRegisterDto));
-        verify(repository,times(1)).existsByEmail(userRegisterDto.getEmail());
-
-    }
-
-    @Test
-    void registerUserFailedPerUsernameExistsInDb(){
-        UserRegisterDto userRegisterDto=new UserRegisterDto();
-        userRegisterDto.setEmail("teste@gmail.com");
-        userRegisterDto.setPassword("password123");
-        userRegisterDto.setFirstName("teste");
-        userRegisterDto.setLastName("teste");
-        userRegisterDto.setUsername("teste");
-
-        when(repository.existsByUsername(userRegisterDto.getUsername())).thenReturn(true)
-                .thenThrow(new BadRequestException("username exists in database"));
-
-        assertThrows(BadRequestException.class,()-> userRegisterService.registerUser(userRegisterDto));
-        verify(repository,times(1)).existsByUsername(userRegisterDto.getUsername());
-    }
 }

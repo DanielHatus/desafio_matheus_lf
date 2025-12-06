@@ -32,6 +32,6 @@ public class RegisterNewProjectFacade{
         Project entity=mapperCore.toEntity(projectPostDto);
         entity.setProjectCreator(usernameByContextHolder.execute());
         entity.setEndDate(fromIsoAmerican.parseDataFormatBrazilianImAmerican(projectPostDto.getEndDate()));
-        return  projectCrudService.addNewProject(entity);
+        return  projectCrudService.saveProjectInDbAndReturnEntityDtoMapped(entity);
     }
 }

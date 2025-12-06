@@ -45,7 +45,7 @@ public class ProjectCrudService{
       return mapperCore.toResponseProjectDataDto(getEntityByIdOrThrow(id));
     }
 
-    public ResponseProjectDataDto addNewProject(Project entity){
+    public ResponseProjectDataDto saveProjectInDbAndReturnEntityDtoMapped(Project entity){
         repository.save(entity);
         log.debug("✅ Everything went correctly and the project was successfully saved to the database, " +
                 "returning the DTO in the response body.");

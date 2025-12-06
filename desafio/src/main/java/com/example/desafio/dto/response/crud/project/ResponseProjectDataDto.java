@@ -5,7 +5,6 @@ import java.time.LocalDate;
 public class ResponseProjectDataDto{
     private Long id;
     private String projectCreator;
-    private String passwordAccess;
     private String nameProject;
     private String description;
     private LocalDate startDate;
@@ -25,14 +24,6 @@ public class ResponseProjectDataDto{
 
     public void setProjectCreator(String projectCreator) {
         this.projectCreator = projectCreator;
-    }
-
-    public String getPasswordAccess() {
-        return passwordAccess;
-    }
-
-    public void setPasswordAccess(String passwordAccess) {
-        this.passwordAccess = passwordAccess;
     }
 
     public String getNameProject() {

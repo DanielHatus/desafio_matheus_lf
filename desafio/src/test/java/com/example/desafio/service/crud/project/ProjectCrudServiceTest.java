@@ -81,7 +81,6 @@ class ProjectCrudServiceTest {
         responseProjectDataDto1.setNameProject(project1.getNameProject());
         responseProjectDataDto1.setStartDate(project1.getStartDate());
         responseProjectDataDto1.setId(project1.getId());
-        responseProjectDataDto1.setPasswordAccess(project1.getPasswordAccess());
 
         ResponseProjectDataDto responseProjectDataDto2=new ResponseProjectDataDto();
         responseProjectDataDto2.setProjectCreator(project2.getProjectCreator());
@@ -89,7 +88,6 @@ class ProjectCrudServiceTest {
         responseProjectDataDto2.setNameProject(project2.getNameProject());
         responseProjectDataDto2.setStartDate(project2.getStartDate());
         responseProjectDataDto2.setId(project2.getId());
-        responseProjectDataDto2.setPasswordAccess(project2.getPasswordAccess());
 
         List<ResponseProjectDataDto> listProjectsDto=List.of(responseProjectDataDto1,responseProjectDataDto2);
         Page<ResponseProjectDataDto>  pageProjectsDto=new PageImpl<>(listProjectsDto,pageable,listProjectsDto.size());
@@ -122,7 +120,6 @@ class ProjectCrudServiceTest {
         responseProjectDataDto1.setNameProject(project1.getNameProject());
         responseProjectDataDto1.setStartDate(project1.getStartDate());
         responseProjectDataDto1.setId(project1.getId());
-        responseProjectDataDto1.setPasswordAccess(project1.getPasswordAccess());
 
         when(repository.findById(idRequest)).thenReturn(Optional.of(project1));
         when(mapperCore.toResponseProjectDataDto(project1)).thenReturn(responseProjectDataDto1);
@@ -153,7 +150,6 @@ class ProjectCrudServiceTest {
         responseProjectDataDto1.setNameProject(project1.getNameProject());
         responseProjectDataDto1.setStartDate(project1.getStartDate());
         responseProjectDataDto1.setId(project1.getId());
-        responseProjectDataDto1.setPasswordAccess(project1.getPasswordAccess());
 
         when(repository.findById(idRequest)).thenReturn(Optional.empty()).thenThrow(new NotFoundException("id not found"));
 
@@ -186,15 +182,13 @@ class ProjectCrudServiceTest {
         responseProjectDataDto.setNameProject(entitySaved.getNameProject());
         responseProjectDataDto.setStartDate(entitySaved.getStartDate());
         responseProjectDataDto.setId(entitySaved.getId());
-        responseProjectDataDto.setPasswordAccess(entitySaved.getPasswordAccess());
 
        when(repository.save(any(Project.class))).thenReturn(entitySaved);
        when(mapperCore.toResponseProjectDataDto(any(Project.class))).thenReturn(responseProjectDataDto);
-       ResponseProjectDataDto result=this.projectCrudService.addNewProject(entity);
+       ResponseProjectDataDto result=this.projectCrudService.saveProjectInDbAndReturnEntityDtoMapped(entity);
 
        assertEquals(responseProjectDataDto.getNameProject(),result.getNameProject());
        assertEquals(responseProjectDataDto.getProjectCreator(),result.getProjectCreator());
-       assertEquals(responseProjectDataDto.getPasswordAccess(),result.getPasswordAccess());
        verify(repository,times(1)).save(entity);
     }
 
@@ -240,7 +234,6 @@ class ProjectCrudServiceTest {
        when(mapperCore.toResponseProjectDataDto(any(Project.class))).thenAnswer(invocation->{
            ResponseProjectDataDto responseProjectDataDto=new ResponseProjectDataDto();
            Project entity=invocation.getArgument(0);
-           responseProjectDataDto.setPasswordAccess(entity.getPasswordAccess());
            responseProjectDataDto.setId(entity.getId());
            responseProjectDataDto.setProjectCreator(entity.getProjectCreator());
            responseProjectDataDto.setNameProject(entity.getNameProject());

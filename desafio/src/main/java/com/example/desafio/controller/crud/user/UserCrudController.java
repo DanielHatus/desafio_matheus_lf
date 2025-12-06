@@ -12,7 +12,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/user/crud")
+@RequestMapping("/api/crud/user")
 public class UserCrudController implements UserCrudDoc {
 private final UserCrudService service;
 

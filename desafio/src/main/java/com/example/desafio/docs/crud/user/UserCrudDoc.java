@@ -14,7 +14,7 @@ description = "This controller is responsible for executing all CRUD operations 
         "(except POST, since there's no need for authentication to register and log in), provided authentication is present.")
 public interface UserCrudDoc {
 
-    @Operation(summary = "It is responsible for retrieving users through pagination based on the client's specific needs.",
+    @Operation(summary = "It is responsible for retrieving projects through pagination based on the client's specific needs.",
     description = "The client will pass the size, page, order, and et as request parameters, " +
             "and when the response DTO is returned, the paginated list will be in accordance with this " +
             "specification passed by the client in the request parameters.",
