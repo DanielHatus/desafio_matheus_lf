@@ -23,7 +23,7 @@ public class InitializerAdminAccount{
     @Bean
     public CommandLineRunner register(){
         return args -> {
-            boolean existsEntity=repository.existsByUsername("admin teste");
+            boolean existsEntity=repository.existsByUsername("admin");
             if (!existsEntity){
                 log.debug("✅ admin account created successfully.");
                 User user=new User();
