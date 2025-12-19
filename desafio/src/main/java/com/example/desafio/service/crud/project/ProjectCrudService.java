@@ -25,7 +25,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class ProjectCrudService{
 
     private final ProjectRepository projectRepository;
-    private final UserRepository userRepository;
     private final ProjectMapperCore mapperCore;
     private final PageableFactoryByClassReceived pageableFactoryByClassReceived;
     private final ParseDataFromIsoAmerican fromIsoAmerican;
@@ -35,7 +34,6 @@ public class ProjectCrudService{
 
     public ProjectCrudService(
             ProjectRepository projectRepository,
-            UserRepository userRepository,
             ProjectMapperCore mapperCore,
             PageableFactoryByClassReceived pageableFactoryByClassReceived,
             ParseDataFromIsoAmerican fromIsoAmerican,
@@ -44,7 +42,6 @@ public class ProjectCrudService{
             UserRequestIsCreatorProject userRequestIsCreatorProject) {
 
         this.projectRepository = projectRepository;
-        this.userRepository = userRepository;
         this.mapperCore = mapperCore;
         this.pageableFactoryByClassReceived = pageableFactoryByClassReceived;
         this.fromIsoAmerican = fromIsoAmerican;
@@ -76,12 +73,12 @@ public class ProjectCrudService{
 
       String usernameRequestAccount=getUsernameByContextHolder.execute();
 
-      User entityUser=userRepository.findByUsername(usernameRequestAccount).get();
-      log.debug("✅ The entity was successfully retrieved by the username in the request.");
+      User userEntity=entityProject.getUser();
+      log.debug("✅ The user entity was successfully retrieved through the existing relationship between user and project.");
 
-      if (!validationIfUserIsRoleAdmin.userIsAdmin(entityUser.getRole())){
+      if (!validationIfUserIsRoleAdmin.userIsAdmin(userEntity.getRole())){
           log.debug("✅ The user is not an admin; check if they are the project creator.");
-          userRequestIsCreatorProject.throwIfUserRequestNotCreatorProject(usernameRequestAccount,entityProject.getProjectCreator());
+          userRequestIsCreatorProject.throwIfUserRequestNotCreatorProject(usernameRequestAccount,userEntity.getUsername());
        }
       log.debug("✅ The user has been successfully validated; they can now update the project data.");
 
@@ -113,7 +110,7 @@ public class ProjectCrudService{
                     log.error("❌ No project registered with ID {} was found on the server.",id);
                     return new NotFoundException("id not found in database");
                 });
-        log.debug("✅ project {} was found on the server with ID {}.",entity.getProjectCreator(),id);
+        log.debug("✅ project {} was found on the server with ID {}.",entity.getUser().getUsername(),id);
         return entity;
     }
 

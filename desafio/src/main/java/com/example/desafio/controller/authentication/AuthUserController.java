@@ -5,7 +5,7 @@ import com.example.desafio.dto.request.authentication.UserLoginDto;
 import com.example.desafio.dto.request.authentication.UserRegisterDto;
 import com.example.desafio.dto.response.authentication.ResponseDtoTokens;
 import com.example.desafio.facade.login.user.LoginAndGenerateTokensFacade;
-import com.example.desafio.facade.register.user.RegisterAndGenerateTokensFacade;
+import com.example.desafio.facade.register.user.RegisterNewUserAndGenerateTokensAuth;
 import jakarta.validation.Valid;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -17,18 +17,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/auth")
 public class AuthUserController implements AuthUserDoc {
-    private final RegisterAndGenerateTokensFacade registerAndGenerateTokensFacade;
+    private final RegisterNewUserAndGenerateTokensAuth registerNewUserAndGenerateTokensAuth;
     private final LoginAndGenerateTokensFacade loginAndGenerateTokensFacade;
 
-    public AuthUserController(RegisterAndGenerateTokensFacade registerAndGenerateTokensFacade, LoginAndGenerateTokensFacade loginAndGenerateTokensFacade) {
-        this.registerAndGenerateTokensFacade = registerAndGenerateTokensFacade;
+    public AuthUserController(RegisterNewUserAndGenerateTokensAuth registerNewUserAndGenerateTokensAuth, LoginAndGenerateTokensFacade loginAndGenerateTokensFacade) {
+        this.registerNewUserAndGenerateTokensAuth = registerNewUserAndGenerateTokensAuth;
         this.loginAndGenerateTokensFacade = loginAndGenerateTokensFacade;
     }
 
     @Override
     @PostMapping(value = "/register",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ResponseDtoTokens> registerAndGenerateTokens(@RequestBody @Valid UserRegisterDto userRegisterDto) {
-        return ResponseEntity.ok(registerAndGenerateTokensFacade.execute(userRegisterDto));
+        return ResponseEntity.ok(registerNewUserAndGenerateTokensAuth.execute(userRegisterDto));
     }
 
     @Override

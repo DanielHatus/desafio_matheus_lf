@@ -1,5 +1,6 @@
 package com.example.desafio.model.project;
 
+import com.example.desafio.model.user.User;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -11,7 +12,10 @@ public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String projectCreator;
+
+    @ManyToOne
+    @JoinColumn(name = "creator_project_id")
+    private User user;
     private String passwordAccess;
     private String nameProject;
     private String description;
@@ -30,12 +34,12 @@ public class Project {
         this.id = id;
     }
 
-    public String getProjectCreator() {
-        return projectCreator;
+    public User getUser() {
+        return user;
     }
 
-    public void setProjectCreator(String projectCreator) {
-        this.projectCreator = projectCreator;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getPasswordAccess() {
@@ -81,11 +85,11 @@ public class Project {
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof Project project)) return false;
-        return Objects.equals(getId(), project.getId()) && Objects.equals(getProjectCreator(), project.getProjectCreator()) && Objects.equals(getPasswordAccess(), project.getPasswordAccess()) && Objects.equals(getNameProject(), project.getNameProject()) && Objects.equals(getDescription(), project.getDescription()) && Objects.equals(getStartDate(), project.getStartDate()) && Objects.equals(getEndDate(), project.getEndDate());
+        return Objects.equals(getId(), project.getId()) && Objects.equals(getUser(), project.getUser()) && Objects.equals(getPasswordAccess(), project.getPasswordAccess()) && Objects.equals(getNameProject(), project.getNameProject()) && Objects.equals(getDescription(), project.getDescription()) && Objects.equals(getStartDate(), project.getStartDate()) && Objects.equals(getEndDate(), project.getEndDate());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getProjectCreator(), getPasswordAccess(), getNameProject(), getDescription(), getStartDate(), getEndDate());
+        return Objects.hash(getId(), getUser(), getPasswordAccess(), getNameProject(), getDescription(), getStartDate(), getEndDate());
     }
 }

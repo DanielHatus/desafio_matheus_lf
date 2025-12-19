@@ -13,9 +13,10 @@ import jakarta.mail.MessagingException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Component
+@Service
 @Slf4j
 public class SendGmailAndSaveProjectRegisterDataFacade {
     private final SendEmail sendEmail;
@@ -50,7 +51,7 @@ public class SendGmailAndSaveProjectRegisterDataFacade {
 
         String tokenPasswordUnique=getTokenProjectPasswordUnique.getTokenProjectUnique();
 
-        String emailCreatorProject=repository.findByUsername(entity.getProjectCreator()).get().getEmail();
+        String emailCreatorProject=repository.findByUsername(entity.getUser().getEmail()).get().getEmail();
 
         String bodyInHtml=buildMessageInHtml.executeBuild(tokenPasswordUnique);
         log.debug("✅ body building in html successfully");

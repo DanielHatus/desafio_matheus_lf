@@ -8,8 +8,9 @@ import com.example.desafio.service.validation.token.password.project.reset.passw
 import com.example.desafio.utils.validation.token.from.reset.password.is.expired.TokenPasswordIsExpired;
 import com.example.desafio.utils.validation.token.from.reset.password.is.used.TokenPasswordIsUsed;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 public class ValidationTokenPasswordFromResetPasswordProjectFacade{
 
     private final GetRegisterProjectByToken getRegister;

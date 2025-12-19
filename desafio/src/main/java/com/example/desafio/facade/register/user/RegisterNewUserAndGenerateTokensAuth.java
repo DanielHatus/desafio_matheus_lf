@@ -13,12 +13,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Slf4j
-public class RegisterAndGenerateTokensFacade {
+public class RegisterNewUserAndGenerateTokensAuth {
     private final UserRegisterService registerService;
     private final GenerateTokensRegisterService tokensRegisterService;
     private final EmailAndUsernameIsUnique emailAndUsernameIsUnique;
 
-    public RegisterAndGenerateTokensFacade(
+    public RegisterNewUserAndGenerateTokensAuth(
         UserRegisterService registerService,
         GenerateTokensRegisterService tokensRegisterService,
         EmailAndUsernameIsUnique emailAndUsernameIsUnique) {
