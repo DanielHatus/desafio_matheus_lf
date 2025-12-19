@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FieldsNameProject{
-    private final List<String>  fieldsNameIncorrect=List.of("passwordAccess","tasks");
+    private final List<String>  fieldsNameIncorrect=List.of("passwordAccess","user");
     private List<String> fieldsNameCorrect;
     private static FieldsNameProject instance;
 
