@@ -127,13 +127,6 @@
 			<artifactId>spring-boot-starter-mail</artifactId>
 		</dependency>
 
-        <!--BANCO H2 PARA TESTES-->
-		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-			<scope>test</scope>
-		</dependency>
-
 	</dependencies>
 
 	<build>
