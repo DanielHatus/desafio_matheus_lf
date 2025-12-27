@@ -15,6 +15,7 @@ import com.example.desafio.repository.project.ProjectRepository;
 import com.example.desafio.repository.task.TaskRepository;
 import com.example.desafio.utils.get.username.by.context.security.GetUsernameByContextHolder;
 import com.example.desafio.utils.parse.data.from.iso.american.ParseDataFromIsoAmerican;
+import com.example.desafio.utils.validation.end.date.project.not.passed.limit.data.EndDateLimitProjectIsPassed;
 import com.example.desafio.utils.validation.user.is.creator.task.UserRequestIsCreatorTask;
 import com.example.desafio.utils.validation.user.is.role.admin.ValidationIfUserIsRoleAdmin;
 import org.junit.jupiter.api.BeforeEach;
@@ -53,6 +54,9 @@ class TaskCrudServiceTest {
 
     @Mock
     private  ParseDataFromIsoAmerican parseDataFromIsoAmerican;
+
+    @Mock
+    private EndDateLimitProjectIsPassed endDateLimitProjectIsPassed;
 
     @InjectMocks
     private TaskCrudService taskCrudService;
@@ -276,6 +280,8 @@ class TaskCrudServiceTest {
 
         when(taskRepository.findById(idRequest))
                 .thenReturn(Optional.of(taskCreated));
+
+        doNothing().when(endDateLimitProjectIsPassed).ifPassedThrow(any(LocalDate.class));
 
         when(getUsernameByContextHolder.execute())
                 .thenReturn(userAccountRequest.getUsername());

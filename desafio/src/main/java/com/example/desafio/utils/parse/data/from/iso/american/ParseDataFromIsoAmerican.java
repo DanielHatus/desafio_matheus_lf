@@ -1,6 +1,7 @@
 package com.example.desafio.utils.parse.data.from.iso.american;
 
 import com.example.desafio.exceptions.typo.runtime.dateparse.DateParseException;
+import com.example.desafio.utils.parse.data.from.iso.american.validation.ValidationIfDatePassedInRequestIsAfterDayNow;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -13,15 +14,20 @@ import java.time.format.ResolverStyle;
 @Slf4j
 public class ParseDataFromIsoAmerican{
     private DateTimeFormatter formatBrazilianIso;
+    private final ValidationIfDatePassedInRequestIsAfterDayNow validationIfDatePassedInRequestIsAfterDayNow;
 
-    public ParseDataFromIsoAmerican(){
+    public ParseDataFromIsoAmerican(ValidationIfDatePassedInRequestIsAfterDayNow validationIfDatePassedInRequestIsAfterDayNow){
         this.formatBrazilianIso=DateTimeFormatter.ofPattern("dd/MM/uuuu").withResolverStyle(ResolverStyle.STRICT);
+        this.validationIfDatePassedInRequestIsAfterDayNow = validationIfDatePassedInRequestIsAfterDayNow;
     }
     public LocalDate parseDataFormatBrazilianImAmerican(String dateRequest){
         try{
             LocalDate formatIsoAmerican=LocalDate.parse(dateRequest,this.formatBrazilianIso);
+
+            validationIfDatePassedInRequestIsAfterDayNow.executeAndThrowIfDataRequestIsBefore(formatIsoAmerican);
+
             log.debug("✅ The date received in the client request was indeed in Brazilian format. " +
-                    "The formatting to American format was successfully completed, returning the formatted date.");
+                    "The formatting to American format was successfully completed and validated successfully, returning the formatted date.");
             return formatIsoAmerican;
         }
         catch (DateTimeParseException e){

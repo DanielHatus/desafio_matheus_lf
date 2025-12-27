@@ -11,6 +11,7 @@ import com.example.desafio.repository.project.ProjectRepository;
 import com.example.desafio.repository.task.TaskRepository;
 import com.example.desafio.utils.get.username.by.context.security.GetUsernameByContextHolder;
 import com.example.desafio.utils.parse.data.from.iso.american.ParseDataFromIsoAmerican;
+import com.example.desafio.utils.validation.end.date.project.not.passed.limit.data.EndDateLimitProjectIsPassed;
 import com.example.desafio.utils.validation.user.is.creator.task.UserRequestIsCreatorTask;
 import com.example.desafio.utils.validation.user.is.role.admin.ValidationIfUserIsRoleAdmin;
 import lombok.extern.slf4j.Slf4j;
@@ -31,6 +32,7 @@ public class TaskCrudService{
     private final GetUsernameByContextHolder getUsernameByContextHolder;
     private final ValidationIfUserIsRoleAdmin validationIfUserIsRoleAdmin;
     private final ParseDataFromIsoAmerican parseDataFromIsoAmerican;
+    private final EndDateLimitProjectIsPassed endDateLimitProjectIsPassed;
 
     public TaskCrudService(
             TaskRepository taskRepository,
@@ -39,7 +41,8 @@ public class TaskCrudService{
             UserRequestIsCreatorTask userRequestIsCreatorTask,
             GetUsernameByContextHolder getUsernameByContextHolder,
             ValidationIfUserIsRoleAdmin validationIfUserIsRoleAdmin,
-            ParseDataFromIsoAmerican parseDataFromIsoAmerican){
+            ParseDataFromIsoAmerican parseDataFromIsoAmerican,
+            EndDateLimitProjectIsPassed endDateLimitProjectIsPassed){
 
         this.taskRepository = taskRepository;
         this.taskMapperCore = taskMapperCore;
@@ -48,6 +51,7 @@ public class TaskCrudService{
         this.getUsernameByContextHolder=getUsernameByContextHolder;
         this.validationIfUserIsRoleAdmin=validationIfUserIsRoleAdmin;
         this.parseDataFromIsoAmerican=parseDataFromIsoAmerican;
+        this.endDateLimitProjectIsPassed=endDateLimitProjectIsPassed;
 
     }
 
@@ -81,6 +85,8 @@ public class TaskCrudService{
      log.debug("✅ The entity task with id {} was successfully found.",id);
 
      String userUsernameRequest=getUsernameByContextHolder.execute();
+
+     endDateLimitProjectIsPassed.ifPassedThrow(entityTask.getProject().getEndDate());
 
      if (!validationIfUserIsRoleAdmin.userIsAdmin(entityTask.getUser().getRole())){
          userRequestIsCreatorTask.throwIfUserRequestNotCreatorTask(userUsernameRequest,entityTask.getUser().getUsername());

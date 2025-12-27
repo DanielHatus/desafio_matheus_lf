@@ -60,11 +60,14 @@ public class ProjectCrudService{
     }
 
     public ResponseProjectDataDto saveProjectInDbAndReturnEntityDtoMapped(Project entity){
-        projectRepository.save(entity);
         log.debug("✅ Everything went correctly and the project was successfully saved to the database, " +
                 "returning the DTO in the response body.");
 
-        return mapperCore.toResponseProjectDataDto(entity);
+        ResponseProjectDataDto dtoReturned=mapperCore.toResponseProjectDataDto(projectRepository.save(entity));
+        dtoReturned.setProjectCreator(entity.getUser().getUsername());
+        log.debug("✅ Everything went correctly and the project was successfully saved to the database, " +
+                "returning the DTO in the response body.");
+        return dtoReturned;
     }
 
     @Transactional

@@ -10,19 +10,30 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
+@Table(name = "tasks")
 public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String titleTask;
+
     private String description;
+
+    @Enumerated(EnumType.STRING)
     private Status status;
+
+    @Enumerated(EnumType.STRING)
     private Priority priority;
+
     private LocalDate dueDate;
+
     @ManyToOne
     @JoinColumn(name = "creator_task_id")
     private User user;
+
     private LocalDate startDate;
+
     @ManyToOne
     @JoinColumn(name = "project_id")
     private Project project;
