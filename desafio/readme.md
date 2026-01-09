@@ -1308,7 +1308,7 @@ SECRET_KEY_IN_BASE_64=cUFZeW5zcVRSam5CWXJhdHByOUpha2pCcGRIRm0wZUE0NzBHUFByN2tyWU
 
   <img src="imgs/img-email-cadastrado.png">
 
-  <p>Quando Inserido O Email Corretamente Chegará no Gmail o token que será utilizado para Efetuar o reset da Senha do usario.</p>
+  <p>Quando Inserido O Email Corretamente, Chegará no Gmail o token que será utilizado para Efetuar o reset da Senha do usuário.</p>
 
   <img src="imgs/img-email-recebido.png">
 
