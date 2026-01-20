@@ -11,7 +11,7 @@
   line-height: 1.5;
   border: 1px solid #30363d;
 ">
-<h2>Esta é a Arvore Arquitetural do Software, uma Lembrete que a nomeclatura das pastas não importam e nem fazem uma diferença real. o que importa é a forma de organizar o software e principalmente como o fluxo das informações trafegam entre as camadas.</h2>
+<h2>Abaixo está a arvóre arquitetural do software. utilzei um MVC(Model-Viewer-Controler) para o desenvolvimento da aplicação. </h2>
 <pre>
 +---src
 |   +---main
@@ -1258,11 +1258,15 @@ SECRET_KEY_IN_BASE_64=cUFZeW5zcVRSam5CWXJhdHByOUpha2pCcGRIRm0wZUE0NzBHUFByN2tyWU
 
 <h2>Testes Desenvolvidos Do Software</h2>
 
+<<<<<<< HEAD
 <p>Testes unitários dos services estão todos feitos. para rodar faça<strong> mvn test</strong></p>
+=======
+<p>Optei Por fazer Somente Os Testes Unitários do service, as Classes da camada Facade que Acoplam uma complexidade maior, optei por não fazer os testes unitários por conta do tempo, basicamente estou viajando enquanto desenvolvo os testes(o software em sí foi terminando 1 dia antes da viagem), consigo usar 1h30 por dia da viagem(hora de desanso pós almoço) para desenvolver os testes unitários, por isso os testes funcionam mas não estão em seu melhor estado de coesão,legibilidade e manutenabilidade igual ao restante do software em sí, e por este mesmo motivo(festas de fim de ano/viagem) nao desenvolvi os Testes De Integração dos controllers.</p>
+>>>>>>> 9ba483244096955f78ee725e63c00e4820eebb6a
 
 <h2>Documentação dos end-points<h2>
 
-<p>Utilizei o Swagger para documentar os end-points da api. nela conté todos os detalhes de cada end-point.basta copiar a url abaixo e cola-la no navegador quando rodar a aplicação.</p>
+<p>Utilizei o Swagger para documentar os end-points da api. nela contém todos os detalhes de cada end-point.basta copiar a url abaixo e cola-la no navegador quando rodar a aplicação.</p>
 
  <div style="
   background-color: #0d1117;
@@ -1308,7 +1312,7 @@ SECRET_KEY_IN_BASE_64=cUFZeW5zcVRSam5CWXJhdHByOUpha2pCcGRIRm0wZUE0NzBHUFByN2tyWU
 
   <img src="imgs/img-email-cadastrado.png">
 
-  <p>Quando Inserido O Email Corretamente Chegará no Gmail o token que será utilizado para Efetuar o reset da Senha do usario.</p>
+  <p>Quando Inserido O Email Corretamente, Chegará no Gmail o token que será utilizado para Efetuar o reset da Senha do usuário.</p>
 
   <img src="imgs/img-email-recebido.png">
 
@@ -1330,6 +1334,11 @@ SECRET_KEY_IN_BASE_64=cUFZeW5zcVRSam5CWXJhdHByOUpha2pCcGRIRm0wZUE0NzBHUFByN2tyWU
 <h2>Sobre O preenchimento Da Data Limite do Projeto e da Task</h2>
 
 <p>Utilize sempre o formato da Iso Brasileira de dd(dia),mm(mes),yyyy(ano) exemplo: 01/01/2026(nao esqueça de usar as barras como separador das datas), e nao insira datas anteriores ao dia atual, caso uma dessas condiçoes nao seja cumprida, será recebido uma exceção.</p>
+
+<h2>Sobre A Conta Administradora</h2>
+
+<p>Ela é iniciada automaticamente quando a Aplicação for iniciada, é avisado nos logs se ela foi criada naquela instancia da aplicação ou se ela
+já foi criada anteriormente. o email para acesso é <strong>admin@gmail.com e a senha é admin123.</strong> </p>
 
 <p>Caso Haja Alguma Dúvida, ou caso queiram entrar em contato comigo enviem um email para<strong> danielhatusviana@gmail.com</strong></p>
 
